@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do NOTHING, Do not REACT</title>
+    <link href="./src/input.css" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Almendra+Display&display=swap" rel="stylesheet">
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen bg-black gap-24 font-almendra">
+    <h1 class="text-6xl text-white">Do NOTHING,<br> Do not REACT</h1>
+    <button id="loginButton" onclick="showLogin()" class="text-white text-3xl p-1 rounded hover:bg-red-900 transition duration-1000">Login</button>
+    <div id="leaderboard" class="text-white fixed top-4 left-4 flex flex-col items-center justify-center text-2xl">
+        <h2 class="text-3xl">Top 5 non-doers</h2>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <div class="flex flex-row items-start gap-2">
+            <h2 class="text-3xl">Your best score:</h2>
+            <p type="score" class="text-3xl">0</p>
+        </div>
+    </div>
+
+    <div id="loginForm" class="hidden flex-col items-center gap-4">
+        <button onclick="showAccountForm()" class="text-white text-xl underline">Don't have an account?</button>
+        <input type="text" placeholder="Username..." class="bg-white font-bold text-black rounded placeholder:text-black placeholder:font-bold" autocomplete="off">
+        <input type="password" placeholder="Password..." class="bg-white font-bold text-black rounded placeholder:text-black placeholder:font-bold" autocomplete="off">
+        <button onclick="login()" class="text-white text-3xl p-1 rounded hover:bg-red-900 transition duration-1000">Submit</button>
+        <button onclick="hideLogin()" class="text-white text-3xl p-1 rounded hover:bg-red-900 transition duration-1000">Back</button>
+    </div>
+
+    <div id="accountForm" class="hidden flex-col items-center gap-4">
+        <input type="text" placeholder="Username..." class="bg-white font-bold text-black rounded placeholder:text-black placeholder:font-bold" autocomplete="off">
+        <input type="password" placeholder="Password..." class="bg-white font-bold text-black rounded placeholder:text-black placeholder:font-bold" autocomplete="off">
+        <input type="password" placeholder="Confirm password..." class="bg-white font-bold text-black rounded placeholder:text-black placeholder:font-bold" autocomplete="off">
+        <button onclick="createAccount()" class="text-white text-3xl p-1 rounded hover:bg-red-900 transition duration-1000">Submit</button>
+        <button onclick="hideAccountForm()" class="text-white text-3xl p-1 rounded hover:bg-red-900 transition duration-1000">Back</button>
+    </div>
+
+    <div id="loggedInButtons" class="hidden flex-col items-center gap-4">
+        <button id="startButton" onclick="startGame()" class="text-white text-3xl p-1 rounded hover:bg-red-900 transition duration-1000">Start</button>
+        <button id="logoutButton" onclick="logout()" class="text-white text-3xl p-1 rounded hover:bg-red-900 transition duration-1000">Logout</button>
+    </div>
+
+    <div id="timer" class="hidden flex-col items-center gap-4">
+        <h2 id="timerDisplay" type="number" class="text-6xl font-italic text-white">0</h2>
+        <button id="leaveTimer" onclick="leaveTimer()" class="text-white text-3xl p-1 rounded hover:bg-red-900 transition duration-1000">Leave timer</button>
+    </div>
+
+    <script type="module" src="./src/app.js"></script>
+</body>
+</html>
