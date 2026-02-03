@@ -111,7 +111,8 @@ async function createAccount(){
     try {
         await client.mutation(api.users.createUser, { username, password });
         alert("Account created");
-        mainMenu();
+        showLogin();
+        hideAccountForm();
         getLeaderboard();
     } catch (e) {
         alert(e.message);

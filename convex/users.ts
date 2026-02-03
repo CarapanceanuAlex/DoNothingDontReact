@@ -1,5 +1,6 @@
 import { mutationGeneric as mutation, queryGeneric as query } from "convex/server";
 import { v } from "convex/values";
+import bcrypt from "bcryptjs";
 
 export const createUser = mutation({
   args: { username: v.string(), password: v.string() },
@@ -11,7 +12,7 @@ export const createUser = mutation({
 
     if (existing) throw new Error("Username already taken");
 
-    return await ctx.db.insert("users", { username, password, highestScore: 0 });
+    return await ctx.db.insert("users", { username, password: bcrypt.hashSync(password, 10), highestScore: 0 });
   },
 });
 
@@ -21,9 +22,12 @@ export const login = query({
     const user = await ctx.db
       .query("users")
       .filter((q) => q.eq(q.field("username"), username))
-      .filter((q) => q.eq(q.field("password"), password))
       .first();
-    return user || null;
+
+    if (!user) return null;
+
+    const isValidUser = bcrypt.compareSync(password, user.password)
+    return isValidUser ? user : null;
   },
 });
 
