@@ -30,6 +30,7 @@ function hideAccountForm(){
 function leaveTimer(){
         hide('timer');
         show('loggedInButtons');
+        isGameActive = false;
 }
 function mainMenu(){
         show('loggedInButtons');
@@ -41,7 +42,10 @@ function logout(){
         hide('loginForm');
         hide('accountForm');
         show('loginButton');
+        currentUser = null;
+        getLeaderboard();
 }
+
 let startTime;
 let timerInterval;
 let isGameActive = false;
@@ -61,6 +65,8 @@ function startGame(){
         document.addEventListener('visibilitychange', resetTimer);
         document.addEventListener('mouseleave', resetTimer);
         window.addEventListener('blur', resetTimer);
+
+        playRandomSound();  
 }
 function updateTimer(){
         timerInterval = setInterval(() => {
@@ -96,7 +102,6 @@ async function login() {
         alert("Invalid username or password");
     }
 }
-
 async function createAccount(){
     const username = document.querySelector('#accountForm input[type="text"]').value;
     const passwords = document.querySelectorAll('#accountForm input[type="password"]');
@@ -119,7 +124,6 @@ async function createAccount(){
     }
 
 }
-
 async function getLeaderboard(){
     let leaderboard = await client.query(api.users.getLeaderboard);
 
@@ -135,11 +139,30 @@ async function getLeaderboard(){
     }
 
     if(currentUser){
-        const updatedUser = await client.query(api.users.login, {username: currentUser.username, password:currentUser.password});
-        document.querySelector('#leaderboard p').textContent = updatedUser.highestScore
+        const updatedUser = await client.query(api.users.getUserByID, {id: currentUser._id});
+        if (updatedUser){
+            currentUser = updatedUser;
+            document.querySelector('#leaderboard p').textContent = updatedUser.highestScore;
+        }
+    } else {
+        document.querySelector('#leaderboard p').textContent = '0';
     }
 }
+function playRandomSound(){
+    if (!isGameActive) return;
 
+    const delay = Math.random() * 240000 + 60000;
+
+    setTimeout(() => {
+
+        const randSoundNum = Math.floor(Math.random() * 9) + 1;
+        const audio = new Audio(`/sounds/sound${randSoundNum}.mp3`)
+        audio.play();
+
+        playRandomSound();
+        console.log(`played sound${randSoundNum}`)
+    }, delay)
+}
 
 getLeaderboard();
 window.showLogin = showLogin;
