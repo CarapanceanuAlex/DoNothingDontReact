@@ -50,3 +50,10 @@ export const getLeaderboard = query({
       .take(5);
   },
 });
+
+export const getUserByID = query({
+  args: { id: v.id("users") },
+  handler: async (ctx, { id }) => {
+    return await ctx.db.get(id);
+  },
+});
