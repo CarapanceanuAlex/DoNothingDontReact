@@ -66,7 +66,9 @@ function startGame(){
         document.addEventListener('mouseleave', resetTimer);
         window.addEventListener('blur', resetTimer);
 
-        playRandomSound();  
+        playRandomSound(); 
+        showEyePic();
+        showErrorPic();
 }
 function updateTimer(){
         timerInterval = setInterval(() => {
@@ -151,7 +153,7 @@ async function getLeaderboard(){
 function playRandomSound(){
     if (!isGameActive) return;
 
-    const delay = Math.random() * 240000 + 60000;
+    const delay = Math.random() * 240000 + 80000;
 
     setTimeout(() => {
 
@@ -164,6 +166,41 @@ function playRandomSound(){
     }, delay)
 }
 
+function showEyePic(){
+    if (!isGameActive) return;
+
+    const delay = Math.random() * 200000 + 100000;
+
+    setTimeout (() => {
+        show("imageEye");
+        const audio = new Audio('/sounds/cryingAndBreathing.mp3');
+        audio.play();
+
+        setTimeout (() => {
+            hide("imageEye");
+        }, 16000);
+
+        showEyePic();
+    }, delay)
+}
+
+function showErrorPic(){
+    if (!isGameActive) return;
+
+    const delay = Math.random() * 400000 + 150000;
+
+    setTimeout (() => {
+        show("imageError");
+        const audio = new Audio('/sounds/error.mp3');
+        audio.play();
+
+        setTimeout(() => {
+            hide("imageError");
+        }, 3000)
+
+        showErrorPic();
+    }, delay)
+}
 getLeaderboard();
 window.showLogin = showLogin;
 window.hideLogin = hideLogin;
