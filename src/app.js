@@ -27,6 +27,20 @@ function hideAccountForm(){
         show('loginForm');
         hide('accountForm');
 }
+
+const titleMessages = ["Your heart will explode", "You have already lost", "You are weak", "You will betray your friends", "You will be alone in the end", "It was all your fault",
+    "They don't miss you", "It is behind you, do not move", "STOP breathing", "Nobody would miss you"];
+function modifyMainTitle(){
+    let randomMessage = titleMessages[Math.floor(Math.random() * titleMessages.length)];
+    const title = document.getElementById("mainTitle");
+    title.innerHTML = randomMessage;
+    title.classList.add("animate-shake");
+}
+function restoreMainTitle(){
+    const title = document.getElementById("mainTitle");
+    title.innerHTML = "Do NOTHING,<br> Do not REACT";
+    title.classList.remove("animate-shake");
+}
 function leaveTimer(){
         hide('timer');
         show('loggedInButtons');
@@ -69,6 +83,7 @@ function startGame(){
         playRandomSound(); 
         showEyePic();
         showErrorPic();
+        changingMainTitle();
 }
 function updateTimer(){
         timerInterval = setInterval(() => {
@@ -165,7 +180,6 @@ function playRandomSound(){
         console.log(`played sound${randSoundNum}`)
     }, delay)
 }
-
 function showEyePic(){
     if (!isGameActive) return;
 
@@ -183,7 +197,6 @@ function showEyePic(){
         showEyePic();
     }, delay)
 }
-
 function showErrorPic(){
     if (!isGameActive) return;
 
@@ -201,6 +214,23 @@ function showErrorPic(){
         showErrorPic();
     }, delay)
 }
+function changingMainTitle(){
+    if (!isGameActive) return;
+
+    const delay = Math.random() * 18000 + 8000
+
+    setTimeout(() => {
+
+        modifyMainTitle();
+
+        setTimeout(() => {
+            restoreMainTitle();
+        }, 5000);
+
+        changingMainTitle();
+    }, delay)
+}
+
 getLeaderboard();
 window.showLogin = showLogin;
 window.hideLogin = hideLogin;
