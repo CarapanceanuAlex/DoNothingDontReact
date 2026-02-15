@@ -44,10 +44,10 @@ export const updateScore = mutation({
 export const getLeaderboard = query({
   args: {},
   handler: async (ctx) => {
-    return await ctx.db
-      .query("users")
-      .order("desc")
-      .take(5);
+    const users = await ctx.db.query("users").collect();
+      return users
+        .sort((a, b) => b.highestScore - a.highestScore)
+        .slice(0,5);
   },
 });
 
